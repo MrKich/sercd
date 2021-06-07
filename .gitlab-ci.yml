@@ -7,13 +7,12 @@ include:
     ref: v1.2.0
     file:
       - 'gitlab-default-stages.yml'
-      - 'gitlab-ms-docker.yml'
       - 'gitlab-nfpm-pack.yml'
       - 'gitlab-deploy.yml'
 
 
 build:
-  image: golang:1.16-buster
+  image: ubuntu:20.04
   stage: build
   artifacts:
     paths:
@@ -22,6 +21,12 @@ build:
       - README.md
       - CHANGELOG.md
   script:
+    - export LANG=en_US.UTF-8 LANGUAGE=en_US:en LC_ALL=en_US.UTF-8 DEBIAN_FRONTEND=noninteractive
+    - sed -i -Ee 's/http:\/\/(archive|security)/mirror:\/\/mirrors/' -e 's/\/ubuntu\//\/mirrors.txt/' /etc/apt/sources.list
+    - apt update
+    - apt -yq --no-install-recommends install locales ca-certificates
+    - locale-gen en_US.UTF-8
+    - apt install -yq --no-install-recommends g++ gcc make
     - .gitlab-ci/build.sh
     - echo export PACKAGE_VERSION="$(git describe --tags)" >> variables
     - echo export PACKAGE_VERSION_SHORT="$(git describe --tags --abbrev=0)" >> variables
