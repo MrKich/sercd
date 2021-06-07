@@ -1,0 +1,27 @@
+variables:
+  CONTAINER_NAME: $CI_PROJECT_NAME
+  DEPLOY_PACKAGE_DIR_BASE: $CI_PROJECT_NAME
+
+include:
+  - project: 'commons/ci-templates'
+    ref: v1.2.0
+    file:
+      - 'gitlab-default-stages.yml'
+      - 'gitlab-ms-docker.yml'
+      - 'gitlab-nfpm-pack.yml'
+      - 'gitlab-deploy.yml'
+
+
+build:
+  image: golang:1.16-buster
+  stage: build
+  artifacts:
+    paths:
+      - bin/
+      - variables
+      - README.md
+      - CHANGELOG.md
+  script:
+    - .gitlab-ci/build.sh
+    - echo export PACKAGE_VERSION="$(git describe --tags)" >> variables
+    - echo export PACKAGE_VERSION_SHORT="$(git describe --tags --abbrev=0)" >> variables

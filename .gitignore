@@ -1,0 +1,20 @@
+# IntelliJ project files
+.idea
+*.iml
+
+# Build files
+*.o
+.deps/
+config.log
+config.status
+Makefile
+bin
+out
+tars
+build
+/sercd
+
+# Pack script files
+package/
+pkg/
+nfpm.yaml

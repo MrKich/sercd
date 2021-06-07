@@ -1,0 +1,24 @@
+# Multi instance version of ${APP_PACKAGE_NAME}.
+# You should create config file at /etc/${APP_PACKAGE_NAME}/%I/config.yml
+# It's not recommended to modify this file in-place, because it will be
+# overwritten during package upgrades.  If you want to customize, the
+# best way is to create a file "/etc/systemd/system/${APP_SYSTEMD_SERVICE_NAME}.service.d/foo.conf",
+# which will be parsed after the file ${APP_SYSTEMD_SERVICE_NAME}.service.
+
+[Unit]
+# Only start if there is a configuration file
+ConditionFileNotEmpty=/etc/${APP_PACKAGE_NAME}/%I/env
+EnvironmentFile=/etc/${APP_PACKAGE_NAME}/%I/env
+Description = ${APP_PACKAGE_NAME} service (instance %I)
+After = network.target
+
+[Service]
+ExecStart = /usr/bin/${APP_BINARY_NAME} -l "${SERCD_HOST}" -p "${SERCD_PORT}" -e 255 "${SERCD_DEVICE}" "/run/${APP_PACKAGE_NAME}/sercd-%I.lock" 1
+Restart=always
+RestartSec=5
+MemoryMax=512M
+StandardOutput = append:/var/log/${APP_PACKAGE_NAME}/${APP_LOG_NAME}-%I.log
+StandardError = inherit
+
+[Install]
+WantedBy = multi-user.target

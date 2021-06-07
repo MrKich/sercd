@@ -1,0 +1,11 @@
+/var/log/${APP_PACKAGE_NAME}/${APP_LOG_NAME}*.log {
+    daily
+    notifempty
+    missingok
+    rotate 93
+    copytruncate
+    delaycompress
+    compress
+    dateext
+    su root root
+}

@@ -1,0 +1,9 @@
+export APP_NAME=sercd
+export APP_BINARY_NAME=rutoll-${APP_NAME}
+export APP_LOG_NAME=rutoll-${APP_NAME}
+export APP_PACKAGE_NAME=rutoll-${APP_NAME}
+export APP_SYSTEMD_SERVICE_NAME=rutoll-${APP_NAME}
+export APP_SRC_BUILD_PATH="."
+export TEMPLATE_DIR_IN=package.template
+export TEMPLATE_DIR_OUT=package
+export PACKAGE_VERSION="${PACKAGE_VERSION:-$(git describe --tags)}"

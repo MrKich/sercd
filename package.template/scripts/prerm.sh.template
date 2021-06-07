@@ -1,0 +1,7 @@
+#!/bin/sh
+set -e
+
+if [ -d /run/systemd/system ]; then
+        deb-systemd-invoke stop "${APP_SYSTEMD_SERVICE_NAME}.service" >/dev/null
+fi
+exit 0

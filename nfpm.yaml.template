@@ -1,0 +1,41 @@
+name: "${APP_PACKAGE_NAME}"
+arch: "amd64"
+platform: "linux"
+version: "${PACKAGE_VERSION}"
+section: "default"
+priority: "extra"
+maintainer: "RUTOLL Support <support@rutoll.ru>"
+description: |
+  ${APP_PACKAGE_NAME} description
+vendor: "RUTOLL LLC"
+license: "custom"
+empty_folders:
+  - /var/log/${APP_PACKAGE_NAME}
+  - /run/${APP_PACKAGE_NAME}
+contents:
+  - src: bin/${APP_BINARY_NAME}
+    dst: /usr/bin/${APP_BINARY_NAME}
+    file_info:
+      mode: 0755
+  - src: package/systemd/systemd@.service
+    dst: /lib/systemd/system/${APP_SYSTEMD_SERVICE_NAME}@.service
+    file_info:
+      mode: 0644
+  - src: package/logrotate/logrotate
+    dst: /etc/logrotate.d/${APP_PACKAGE_NAME}
+    type: config
+    file_info:
+      mode: 0644
+  - src: config.example/*
+    dst: /etc/${APP_PACKAGE_NAME}/example/
+    file_info:
+      mode: 0644
+
+overrides:
+  deb:
+    scripts:
+      postinstall: package/scripts/postinst.sh
+      preremove: package/scripts/prerm.sh
+      postremove: package/scripts/postrm.sh
+
+
