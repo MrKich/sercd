@@ -4,7 +4,7 @@ set -e
 
 if [ "$1" = "remove" ]; then
   if [ -x "/usr/bin/deb-systemd-helper" ]; then
-    deb-systemd-helper mask "${APP_SYSTEMD_SERVICE_NAME}.service" >/dev/null || true
+    deb-systemd-helper mask "${APP_SYSTEMD_SERVICE_NAME}.target" >/dev/null || true
   fi
 elif [ "$1" = "purge" ] ; then
   if [ -d "/etc/${APP_PACKAGE_NAME}" ]; then
@@ -15,8 +15,8 @@ elif [ "$1" = "purge" ] ; then
   fi
 
   if [ -x "/usr/bin/deb-systemd-helper" ]; then
-    deb-systemd-helper purge "${APP_SYSTEMD_SERVICE_NAME}.service" >/dev/null || true
-    deb-systemd-helper unmask "${APP_SYSTEMD_SERVICE_NAME}.service" >/dev/null || true
+    deb-systemd-helper purge "${APP_SYSTEMD_SERVICE_NAME}.target" >/dev/null || true
+    deb-systemd-helper unmask "${APP_SYSTEMD_SERVICE_NAME}.target" >/dev/null || true
   fi
 fi
 

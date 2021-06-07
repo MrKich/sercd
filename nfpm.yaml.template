@@ -21,6 +21,10 @@ contents:
     dst: /lib/systemd/system/${APP_SYSTEMD_SERVICE_NAME}@.service
     file_info:
       mode: 0644
+  - src: package/systemd/systemd.target
+    dst: /lib/systemd/system/${APP_SYSTEMD_SERVICE_NAME}.target
+    file_info:
+      mode: 0644
   - src: package/logrotate/logrotate
     dst: /etc/logrotate.d/${APP_PACKAGE_NAME}
     type: config
