@@ -26,7 +26,7 @@ build:
     - apt update
     - apt -yq --no-install-recommends install locales ca-certificates
     - locale-gen en_US.UTF-8
-    - apt install -yq --no-install-recommends g++ gcc make
+    - apt install -yq --no-install-recommends g++ gcc make git
     - .gitlab-ci/build.sh
     - echo export PACKAGE_VERSION="$(git describe --tags)" >> variables
     - echo export PACKAGE_VERSION_SHORT="$(git describe --tags --abbrev=0)" >> variables
